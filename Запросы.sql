@@ -1,4 +1,4 @@
-0. Идеальные формы: 1)таблица team, из неё можем в department, добавить, потом обратно; 2) таблица health_check, из неё можно в employee, создать, потом обратно; 3) таблица department_employee, из неё можно и в employee, и в department, добавить, потом обратно; 4) таблица path, из неё можно в station, добавить,       перейти обратно(todo: надо добавить какое-то поле date);
+0. Идеальные формы: 1)таблица team, из неё можем в department, добавить, потом обратно; 2) таблица health_check, из неё можно в employee, создать, потом обратно; 3) таблица department_employee, из неё можно и в employee, и в department, добавить, потом обратно; 4) таблица path, из неё можно в station, добавить,       перейти обратно;
 
 1. Запрос с фильтрацией и сортировкой. Вывести количество детей у работников, чьи зарплаты выше 10000.
 SELECT 
@@ -8,8 +8,18 @@ FROM employee e
 WHERE e.salary >= 10000
 ORDER BY ASC
 
-2. Запрос с GROUP BY. Вывести фамилии работников (employee) для каждого отдела (department), у которых зп выше среднего по отделу, 3. Запрос с HAVING, 4. Запрос с INNER JOIN
-SELECT 
+2. Запрос с GROUP BY.
+SELECT
+	d.department_name,
+	ARRAY_AGG(e.last_name)
+FROM department_employee de
+	JOIN employee e ON e.employee_id = de.employee_id
+	JOIN department d on d.department_id = de.department_id
+GROUP BY de.department_id, d.department_name//todo: need this last?
+
+3. Запрос с HAVING, 
+Вывести фамилии работников (employee) для каждого отдела (department), у которых зп выше среднего по отделу
+SELECT
 	d.department_name,
 	ARRAY_AGG(e.last_name)
 FROM department_employee de
@@ -18,7 +28,26 @@ FROM department_employee de
 	HAVING e.salary > AVG(e.salary)
 GROUP BY de.department_id, d.department_name//todo: need this last?
 
-5. Запрос с OUTER JOIN. 6. Запрос с подзапросом.
+4. Запрос с INNER JOIN
+вывести фамилии работников(employee), которые принадлежат хоть какому-то отделу (department)
+SELECT 
+	e.last_name
+FROM 
+	department_employee de
+JOIN employee e on 
+	e.employee_id = de.employee_id
+
+5. Запрос с OUTER JOIN. 
+Вывести фамилии всех работников(employee), которые ещё не определены ни в какой отдел (department)
+SELECT 
+	e.last_name
+FROM 
+	employee e
+LEFT JOIN department_employee de on 
+	de.employee_id = e.employee_id
+WHERE de.department_id = NULL // or IS NULL
+
+6. Запрос с подзапросом.
 Найти всех работников, которые ещё не принадлежат никакому отделу и при этом их зарплата выше зарплаты данного работника (параметризованный запрос). Вывести их фамилии (given_employee_id)
 SELECT
 	*
@@ -35,9 +64,10 @@ AND
 					employee e
 				WHERE e.employee_id = {GIVEN_EMPLOYEE_ID_PARAMETER}
 				) salary 
-				
-Доп. баллы:
 
+
+			
+Доп. баллы:
 1. Индекс для запроса
 CREATE INDEX gender_index ON gender;
 
