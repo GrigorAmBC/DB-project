@@ -1,3 +1,5 @@
+0. Идеальные формы: 1)таблица team, из неё можем в department, добавить, потом обратно; 2) таблица health_check, из неё можно в employee, создать, потом обратно; 3) таблица department_employee, из неё можно и в employee, и в department, добавить, потом обратно; 4) таблица path, из неё можно в station, добавить,       перейти обратно(todo: надо добавить какое-то поле date);
+
 1. Запрос с фильтрацией и сортировкой. Вывести количество детей у работников, чьи зарплаты выше 10000.
 SELECT 
 	e.last_name,
@@ -16,13 +18,62 @@ FROM department_employee de
 	HAVING e.salary > AVG(e.salary)
 GROUP BY de.department_id, d.department_name//todo: need this last?
 
-5. Запрос с OUTER JOIN. Найти всех работников, которые ещё не принадлежат никакому отделу. (стажируются, например). и при этом имеют пол работника, который не имеет детей
+5. Запрос с OUTER JOIN. 6. Запрос с подзапросом.
+Найти всех работников, которые ещё не принадлежат никакому отделу и при этом их зарплата выше зарплаты данного работника (параметризованный запрос). Вывести их фамилии (given_employee_id)
 SELECT
 	*
 FROM 
 	employee e
 	LEFT JOIN department_employee de on de.employee_id = e.employee_id
-WHERE de.department_id = NULL //todo: or is NULL
 
-6. Запрос с подзапросом
+WHERE 
+	de.department_id = NULL /*todo: or is NULL*/ 
+AND 
+	e.salary > (SELECT 
+					e.salary
+				FROM 
+					employee e
+				WHERE e.employee_id = {GIVEN_EMPLOYEE_ID_PARAMETER}
+				) salary 
+				
+Доп. баллы:
+
+1. Индекс для запроса
+CREATE INDEX gender_index ON gender;
+
+2. Триггер (допилить)
+Пример создания таблицы со свойством autoIncrement у столбца ID:
+CREATE TABLE STATION (
+id INT NOT NULL,
+name VARCHAR(30) NOT NULL,
+PRIMARY KEY (id)
+);
+CREATE SEQUENCE STATION_ai
+START WITH 1
+INCREMENT BY 1
+NOMAXVALUE;
+CREATE OR REPLACE TRIGGER tr_ai before INSERT ON station FOR each row
+BEGIN
+SELECT STATION_ai.NEXTVAL
+INTO :new.id
+FROM dual;
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
