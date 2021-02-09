@@ -7,7 +7,6 @@ buildscript {
         classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.0"
         classpath "org.grails.plugins:hibernate5:7.0.4"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:3.2.4"
-        classpath "org.grails.plugins:db-reverse-engineer:4.0.0"
     }
 }
 
@@ -38,12 +37,12 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
+    compile "org.grails.plugins:scaffolding"
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile "org.grails:grails-web-boot"
     compile "org.grails:grails-logging"
     compile "org.grails:grails-plugin-rest"
-    compile "org.grails.plugins:db-reverse-engineer:4.0.0"
     compile "org.grails:grails-plugin-databinding"
     compile "org.grails:grails-plugin-i18n"
     compile "org.grails:grails-plugin-services"

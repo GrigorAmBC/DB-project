@@ -9,3 +9,7 @@
 //= require bootstrap
 //= require popper.min
 //= require_self
+
+function doSomething() {
+    history.back()
+}
