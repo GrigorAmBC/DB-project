@@ -1,17 +1,24 @@
 package ru.nsu.fit.grigor.railways
 
+import grails.rest.RestfulController
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-class GenderController {
+class GenderController extends RestfulController {
+
+    static responseFormats = ['html', 'json']
 
     GenderService genderService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    GenderController() {
+        super(Gender)
+    }
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond genderService.list(params), model:[genderCount: genderService.count()]
+        respond genderService.list(params), model: [genderCount: genderService.count()]
     }
 
     def show(Long id) {
@@ -31,7 +38,7 @@ class GenderController {
         try {
             genderService.save(gender)
         } catch (ValidationException e) {
-            respond gender.errors, view:'create'
+            respond gender.errors, view: 'create'
             return
         }
 
@@ -57,7 +64,7 @@ class GenderController {
         try {
             genderService.save(gender)
         } catch (ValidationException e) {
-            respond gender.errors, view:'edit'
+            respond gender.errors, view: 'edit'
             return
         }
 
@@ -66,7 +73,7 @@ class GenderController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'gender.label', default: 'Gender'), gender.id])
                 redirect gender
             }
-            '*'{ respond gender, [status: OK] }
+            '*' { respond gender, [status: OK] }
         }
     }
 
@@ -81,9 +88,9 @@ class GenderController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'gender.label', default: 'Gender'), id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -93,7 +100,7 @@ class GenderController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'gender.label', default: 'Gender'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

@@ -3,6 +3,7 @@ package dbproject
 class UrlMappings {
 
     static mappings = {
+        "/genders"(resources:"gender")
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
                 // apply constraints here

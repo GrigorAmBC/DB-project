@@ -1,15 +1,29 @@
-// This is a manifest file that'll be compiled into application.js.
-//
-// Any JavaScript file within this directory can be referenced here using a relative path.
-//
-// You're free to add application-wide JavaScript to this file, but it's generally better
-// to create separate JavaScript files as needed.
-//
-//= require jquery-3.3.1.min
-//= require bootstrap
-//= require popper.min
-//= require_self
+function createGenderAndUpdate() {
+    setTimeout(doCallAndUpdate, 500);
+}
 
-function doSomething() {
-    history.back()
+function doCallAndUpdate() {
+    const http = new XMLHttpRequest();
+    const url = "http://localhost:8080/genders.json"
+    http.open("GET", url);
+
+    http.send();
+    http.onreadystatechange = (e) => {
+        const genderSelector = document.querySelector('#gender')
+        const length = genderSelector.options.length
+        if (length > 0) {
+            for (i = length - 1; i >= 0; i--) {
+                genderSelector.options.remove(i)
+            }
+        }
+
+        const genderArray = JSON.parse(http.response)
+        genderArray.forEach(function (value) {
+            console.log(value.id)
+            var opt = document.createElement('option');
+            opt.value = value.id;
+            opt.innerHTML = value.name;
+            genderSelector.appendChild(opt);
+        })
+    }
 }
