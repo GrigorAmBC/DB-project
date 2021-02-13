@@ -11,7 +11,7 @@ class TeamController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond teamService.list(params), model:[teamCount: teamService.count()]
+        respond teamService.listWithParams(params), model:[teamCount: teamService.count()]
     }
 
     def show(Long id) {

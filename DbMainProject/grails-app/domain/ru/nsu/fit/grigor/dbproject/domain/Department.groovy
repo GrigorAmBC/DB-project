@@ -5,10 +5,10 @@ class Department {
     String name
 
     static constraints = {
-        name blank: false, size: 5..40, unique: true
+        name blank: false, size: 1..40, unique: true
     }
 
-    static hasMany = [teams: Team, employees: Employee]
+    static hasMany = [employees: Employee]
 
     static belongsTo = Employee
 
