@@ -17,4 +17,9 @@ class Trip {
         direction blank: false, size: 5..30
         category nullable: true
     }
+
+    @Override
+    String toString() {
+        return "$path, $tripDate, $direction"
+    }
 }

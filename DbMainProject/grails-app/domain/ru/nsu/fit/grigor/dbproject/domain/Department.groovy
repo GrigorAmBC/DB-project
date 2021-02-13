@@ -4,11 +4,16 @@ class Department {
 
     String name
 
-
-    /*
-    todo: many To many with employees
-     */
     static constraints = {
-        name blank: false, size: 5..40
+        name blank: false, size: 5..40, unique: true
+    }
+
+    static hasMany = [teams: Team, employees: Employee]
+
+    static belongsTo = Employee
+
+    @Override
+    String toString() {
+        return name
     }
 }

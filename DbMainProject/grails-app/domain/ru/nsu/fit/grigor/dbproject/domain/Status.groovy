@@ -5,6 +5,11 @@ class Status {
     String name
 
     static constraints = {
-        name blank: false, size: 2..20
+        name blank: false, size: 2..20, unique: true
+    }
+
+    @Override
+    String toString() {
+        return name
     }
 }

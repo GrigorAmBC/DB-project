@@ -10,9 +10,10 @@ class Employee {
     Date employmentDate
     Integer salary
     Team team
-    /*
-    todo: many To many with departments
-     */
+
+    static hasMany = [departments: Department]
+
+    static hasOne = HealthCheck
 
     static constraints = {
         name blank: false, size: 2..15
@@ -20,5 +21,17 @@ class Employee {
         children_count min: 0, max: 20
         salary min: 1
         age min: 18
+        employmentDate validator: {val -> validateEmploymentDate(val)}
+        team nullable: true
+    }
+
+    private static validateEmploymentDate(Date date) {
+        if (date.after(new Date()))
+            return ["invalid date"]
+    }
+
+    @Override
+    String toString() {
+        return "$name, $age y.o."
     }
 }
