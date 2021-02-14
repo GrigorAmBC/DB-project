@@ -10,13 +10,28 @@ abstract class TeamService {
     abstract List<Team> list(Map args)
 
     List<Team> listWithParams(Map args) {
+        //        Date fromDate = new Date(args.get("fromDate").toString() ?: null)//todo: right?
+        //        Date toDate = new Date(args.get("toDate").toString())//todo: right?
         Long departmentId = args.get("department") as Long
+        if (departmentId < 0) {
+            departmentId = null
+        }
         String name = args.get("name")
-//        Date fromDate = new Date(args.get("fromDate").toString() ?: null)//todo: right?
-//        Date toDate = new Date(args.get("toDate").toString())//todo: right?
+        if (name.toString().empty) {
+            name = null
+        }
         String isWorking = args.get("working")
-        Long fromBudget = args.get("fromBudget") as Long
-        Long toBudget = args.get("toBudget") as Long
+        if (isWorking != null && !(isWorking == "true" || isWorking == "false")) {
+            isWorking = null
+        }
+        Long fromBudget = null
+        if (!args.get("fromBudget").toString().empty) {
+            fromBudget = args.get("fromBudget") as Long
+        }
+        Long toBudget = null
+        if (!args.get("toBudget").toString().empty) {
+            toBudget = args.get("toBudget") as Long
+        }
         if (fromBudget != null && toBudget != null && fromBudget > toBudget) {
             throw new IllegalArgumentException("budget FROM must be less than or equal budget TO")
         }

@@ -8,6 +8,17 @@ class TeamController {
     TeamService teamService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+/*
+    def searchResults = {
+        def entryCriteria = Team.createCriteria()
+        def results = entryCriteria.list {
+            if(params?.working) {
+                ilike(value, )
+                between("fechaCambio", params.fechaCambioD, params.fechaCambioH)
+            }
+        }
+        render(view:'searchResults', model:['results':results, 'proyectoRutaN':params?.proyectoRutaN, 'fechaCambioD':params?.fechaCambioD, 'fechaCambioH':params?.fechaCambioH, 'lastUpdatedD':params?.lastUpdatedD, 'lastUpdatedH':params?.lastUpdatedH])
+    }*/
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
