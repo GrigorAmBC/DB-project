@@ -9,6 +9,7 @@
 <body onload="initFields()">
 <a href="#list-team" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
                                                            default="Skip to content&hellip;"/></a>
+
 <div class="nav" role="navigation">
     <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
@@ -29,43 +30,63 @@
     </div>
 </div>
 
-<form action="index" method="get">
+<form action="index" method="get" name="filters" id="filters">
     <fieldset class="form">
         <div class="fieldcontain required">
-            Name <input type="text" name="name" maxlength="50" id="name" value="${params.name}">
+            <label for="name">Name</label>
+            <input type="text" name="name" maxlength="50" id="name" value="${params.name}">
         </div>
-
         <div class="fieldcontain required">
-            Budget from
+            <label for="fromBudget">Budget from</label>
             <input type="number" name="fromBudget" min="0"
                    max="10000000" id="fromBudget" value="${params.fromBudget}">
         </div>
-
         <div class="fieldcontain required">
-            Budget to
+            <label for="toBudget">Budget to</label>
             <input type="number" name="toBudget" value="${params.toBudget}"
                    min="0" max="10000000" id="toBudget">
         </div>
-
-
         <div class="fieldcontain required">
-            Department
-            <select name="department" id="department" value="2">
+            <label for="department">Department</label>
+            <select name="department" id="department">
                 <option value="-1"></option>
             </select>
         </div>
-
         <div class="fieldcontain">
-            Is Working
+            <label for="working">Is Working</label>
             <select name="working" id="working">
                 <option value="-1"></option>
                 <option value="true">True</option>
                 <option value="false">False</option>
             </select>
         </div>
+        <div class="fieldcontain">
+            <input type="button" name="create" class="save" value="Отправить" id="create" onclick="validateAndSend()">
+            <input type="button" name="reset" value="Сбросить" onclick="resetFilterForm()">
+        </div>
     </fieldset>
 </form>
+<script>
+    function resetFilterForm() {
+        document.querySelector('#name').value = ""
+        document.querySelector('#fromBudget').value = ""
+        document.querySelector('#toBudget').value = ""
+        document.querySelector('#department').value = ""
+        document.querySelector('#working').value = ""
+    }
 
+    function validateAndSend() {
+        const filters = document.querySelector('#filters')
+        const to = filters.toBudget.value
+        const from = filters.fromBudget.value
+        if (to !== '' && from !== '' && parseInt(to) < parseInt(from)) {
+            alert('\'Budget from\' должен быть меньше \'Budget to\'!')
+            return false;
+        } else {
+            filters.submit();
+        }
+    }
+</script>
 <script>
     setTimeout(initFields, 10)
 
@@ -137,6 +158,7 @@
             }
         }
     }
+
     initWorking()
 </script>
 </body>
