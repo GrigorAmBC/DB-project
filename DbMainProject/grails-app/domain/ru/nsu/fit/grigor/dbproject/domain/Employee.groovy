@@ -19,7 +19,7 @@ class Employee {
         name blank: false, size: 2..15
         position nullable: true, size: 2..40
         children_count min: 0, max: 20
-        salary min: 1
+        salary min: 1, max: 1000000
         age min: 18
         employmentDate validator: {val -> validateEmploymentDate(val)}
         team nullable: true

@@ -30,6 +30,10 @@
     </div>
 </div>
 
+<div class="fieldcontain required">
+    <h4 class="fieldcontain required">Фильтры</h4>
+</div>
+
 <form action="index" method="get" name="filters" id="filters">
     <fieldset class="form">
         <div class="fieldcontain required">
