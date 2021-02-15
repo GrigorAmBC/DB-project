@@ -33,25 +33,39 @@
 <form action="index" method="get" name="filters" id="filters">
     <fieldset class="form">
         <div class="fieldcontain required">
+            <label for="fromDate">Created from</label>
+            <input type="date" id="fromDate" name="fromDate" placeholder="from" value="${params.fromDate}"/>
+        </div>
+
+        <div class="fieldcontain required">
+            <label for="toDate">Created to</label>
+            <input type="date" id="toDate" name="toDate" placeholder="to" value="${params.toDate}"/>
+        </div>
+
+        <div class="fieldcontain required">
             <label for="name">Name</label>
             <input type="text" name="name" maxlength="50" id="name" value="${params.name}">
         </div>
+
         <div class="fieldcontain required">
             <label for="fromBudget">Budget from</label>
             <input type="number" name="fromBudget" min="0"
                    max="10000000" id="fromBudget" value="${params.fromBudget}">
         </div>
+
         <div class="fieldcontain required">
             <label for="toBudget">Budget to</label>
             <input type="number" name="toBudget" value="${params.toBudget}"
                    min="0" max="10000000" id="toBudget">
         </div>
+
         <div class="fieldcontain required">
             <label for="department">Department</label>
             <select name="department" id="department">
                 <option value="-1"></option>
             </select>
         </div>
+
         <div class="fieldcontain">
             <label for="working">Is Working</label>
             <select name="working" id="working">
@@ -60,6 +74,7 @@
                 <option value="false">False</option>
             </select>
         </div>
+
         <div class="fieldcontain">
             <input type="button" name="create" class="save" value="Отправить" id="create" onclick="validateAndSend()">
             <input type="button" name="reset" value="Сбросить" onclick="resetFilterForm()">
@@ -73,18 +88,31 @@
         document.querySelector('#toBudget').value = ""
         document.querySelector('#department').value = ""
         document.querySelector('#working').value = ""
+        document.querySelector('#fromDate').value = ""
+        document.querySelector('#toDate').value = ""
     }
 
     function validateAndSend() {
         const filters = document.querySelector('#filters')
-        const to = filters.toBudget.value
-        const from = filters.fromBudget.value
-        if (to !== '' && from !== '' && parseInt(to) < parseInt(from)) {
+        const toBudget = filters.toBudget.value
+        const fromBudget = filters.fromBudget.value
+        if (toBudget !== '' && fromBudget !== '' && parseInt(toBudget) < parseInt(fromBudget)) {
             alert('\'Budget from\' должен быть меньше \'Budget to\'!')
-            return false;
-        } else {
-            filters.submit();
+            return false
         }
+
+        const fromDate = document.querySelector('#fromDate').value
+        const toDate = document.querySelector('#toDate').value
+        if (fromDate !== '' && toDate !== '') {
+            var d1 = new Date(fromDate);
+            var d2 = new Date(toDate);
+            if (d1.getTime() > d2.getTime()) {
+                alert('Created from должен быть раньше, чем Created to!')
+                return false
+            }
+        }
+
+        filters.submit();
     }
 </script>
 <script>

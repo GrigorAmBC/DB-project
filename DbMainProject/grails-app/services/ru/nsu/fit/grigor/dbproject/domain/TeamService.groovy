@@ -2,6 +2,8 @@ package ru.nsu.fit.grigor.dbproject.domain
 
 import grails.gorm.services.Service
 
+import java.text.SimpleDateFormat
+
 @Service(Team)
 abstract class TeamService {
 
@@ -10,8 +12,9 @@ abstract class TeamService {
     abstract List<Team> list(Map args)
 
     List<Team> listWithParams(Map args) {
-        //        Date fromDate = new Date(args.get("fromDate").toString() ?: null)//todo: right?
-        //        Date toDate = new Date(args.get("toDate").toString())//todo: right?
+        Date fromDate = parseDate(args.get("fromDate"))
+        Date toDate = parseDate(args.get("toDate"))
+
         Long departmentId = args.get("department") as Long
         if (departmentId < 0) {
             departmentId = null
@@ -46,11 +49,11 @@ abstract class TeamService {
             (fromBudget != null && it.budget >= fromBudget || fromBudget == null)
         }.findAll {
             (toBudget != null && it.budget <= toBudget || toBudget == null)
-        }/*.findAll {
+        }.findAll {
             (fromDate != null && it.createdAt.after(fromDate) || fromDate == null)
         }.findAll {
-            (toDate != null && it.createdAt.before(toDate) || toDate)
-        }*/
+            (toDate != null && it.createdAt.before(toDate) || toDate == null)
+        }
     }
 
     abstract Long count()
@@ -59,4 +62,16 @@ abstract class TeamService {
 
     abstract Team save(Team team)
 
+
+    private static Date parseDate(Object stringObject) {
+        if (stringObject == null || stringObject.toString().empty) {
+            return null
+        }
+        try {
+            String pattern = "yyyy-MM-dd"
+            return new SimpleDateFormat(pattern).parse(stringObject.toString())
+        } catch(Exception ignored) {
+            return null
+        }
+    }
 }
