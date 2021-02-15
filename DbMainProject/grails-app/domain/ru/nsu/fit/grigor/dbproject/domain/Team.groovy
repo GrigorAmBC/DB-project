@@ -10,11 +10,9 @@ class Team {
 
     static constraints = {
         name blank: false, size: 2..50
-        createdAt validator: {if (it != null && it.after(new Date())) return ["invalid date"]}
+        createdAt validator: { if (it != null && it.after(new Date())) return ["invalid date"] }
         budget min: 0, max: 10000000
     }
-
-//    static belongsTo = [department: Department]//todo: need this?
 
     @Override
     String toString() {

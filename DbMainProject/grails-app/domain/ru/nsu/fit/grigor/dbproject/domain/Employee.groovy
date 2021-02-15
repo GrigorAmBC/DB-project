@@ -11,8 +11,6 @@ class Employee {
     Integer salary
     Team team
 
-    static hasMany = [departments: Department]
-
     static hasOne = HealthCheck
 
     static constraints = {
@@ -21,7 +19,7 @@ class Employee {
         children_count min: 0, max: 20
         salary min: 1, max: 1000000
         age min: 18
-        employmentDate validator: {val -> validateEmploymentDate(val)}
+        employmentDate validator: { val -> validateEmploymentDate(val) }
         team nullable: true
     }
 

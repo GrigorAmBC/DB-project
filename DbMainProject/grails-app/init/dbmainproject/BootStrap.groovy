@@ -1,6 +1,7 @@
 package dbmainproject
 
 import ru.nsu.fit.grigor.dbproject.domain.Department
+import ru.nsu.fit.grigor.dbproject.domain.DepartmentEmployee
 import ru.nsu.fit.grigor.dbproject.domain.Employee
 import ru.nsu.fit.grigor.dbproject.domain.Gender
 import ru.nsu.fit.grigor.dbproject.domain.Locomotive
@@ -20,6 +21,8 @@ class BootStrap {
         Department d2 = new Department(name: "Healers").save()
         Department d3 = new Department(name: "HR").save()
         Department d4 = new Department(name: "CHOP").save()
+        Department d5 = new Department(name: "Cleaning department").save()
+        Department d6 = new Department(name: "Finance department").save()
 
         Team team2 = new Team(department: d2, createdAt: getDate(2015, 2, 2), budget: 10000, name: "team2", isWorking: true).save()
         Team team3 = new Team(department: d1, createdAt: getDate(2020, 11, 3), budget: 41234, name: "team3", isWorking: true).save()
@@ -34,6 +37,22 @@ class BootStrap {
                 name: "George", gender: male, age: 21, children_count: 4, position: "Chief builder",
                 employmentDate: getDate(1999, 2, 21), salary: 210000
         ).save()
+        Employee employee3 = new Employee(
+                name: "Lisa", gender: female, age: 45, children_count: 2, position: "CEO",
+                employmentDate: getDate(1994, 3, 7), salary: 300000
+        ).save()
+        Employee employee4 = new Employee(
+                name: "Carmen", gender: female, age: 25, children_count: 0, position: "SMM",
+                employmentDate: getDate(2016, 5, 21), salary: 90000
+        ).save()
+        Employee employee5 = new Employee(
+                name: "Lara", gender: female, age: 26, children_count: 1, position: "HR manager",
+                employmentDate: getDate(2013, 9, 21), salary: 115000
+        ).save()
+
+        DepartmentEmployee departmentEmployee1 = new DepartmentEmployee(employee: employee3, department: d1).save()
+        DepartmentEmployee departmentEmployee2 = new DepartmentEmployee(employee: employee2, department: d3).save()
+
 
         Station station1 = new Station(name: "Novosibirsk main").save()
         Station station2 = new Station(name: "Novosibirsk south").save()

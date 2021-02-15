@@ -8,8 +8,6 @@ class Department {
         name blank: false, size: 1..40, unique: true
     }
 
-    static hasMany = [employees: Employee]
-
     static belongsTo = Employee
 
     @Override
