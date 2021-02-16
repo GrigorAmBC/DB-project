@@ -11,25 +11,30 @@
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
     </ul>
 </div>
+
 <div>
     <div>
-        <h2>Группировка</h2>
+        <h2 style="margin-left: 20px">Group by</h2>
     </div>
-    <form class="form">
+
+    <form class="form" style="margin-left: 20px">
         Вывести всех работников для каждого отдела
         <input type="submit" value="Обновить">
     </form>
 
     <div id="list-employee" class="content scaffold-list" role="main">
-        <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+        <h1><g:message code="default.list.label" args="[entityName]"/></h1>
         <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
         </g:if>
-        <f:table collection="${results}" />
-
-        <div class="pagination">
-            <g:paginate total="${resultCount ?: 0}" />
-        </div>
+        <g:each in="${results}" var="result">
+            <div style="background-color: #FFFFFF">
+                Department: <a href="/department/show/${result.key.id}">${result.key}</a>
+            </div>
+%{--            <h1 style="background-color: #FFFFFF">Department: ${result.key}</h1>--}%
+            <f:table collection="${result.value.employee}"/>
+            <br>
+        </g:each>
     </div>
 </div>
 </body>

@@ -22,7 +22,7 @@
         <br>
         <g:select name="employee" from="${employees}"  value="${params.employee}" optionKey="id" required="" />
         <g:if test="${params.employee == null}" >
-            <span style="color:red">Выберите работника</span>
+            <span style="color:red">Выберите работника и нажмите 'Обновить'</span>
         </g:if>
         <br>
         <input type="submit" value="Обновить">

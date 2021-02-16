@@ -16,7 +16,7 @@
     <h1><g:message code="default.list.label" args="[entityName]"/></h1>
 </div>
 
-<div>
+<div style="margin-left: 40px">
     <div class="fieldcontain required">
         <a href="filteringAndSorting">Фильтры и сортировка</a>
     </div>
