@@ -2,7 +2,7 @@
 
 1. Запрос с фильтрацией и сортировкой. Вывести количество детей у работников, чьи зарплаты выше 10000.
 SELECT 
-	e.last_name,
+	e.name,
 	e.children_count
 FROM employee e
 WHERE e.salary >= 10000
@@ -11,7 +11,7 @@ ORDER BY ASC
 2. Запрос с GROUP BY.
 SELECT
 	d.department_name,
-	ARRAY_AGG(e.last_name)
+	ARRAY_AGG(e.name)
 FROM department_employee de
 	JOIN employee e ON e.employee_id = de.employee_id
 	JOIN department d on d.department_id = de.department_id
@@ -53,23 +53,39 @@ SELECT
 	*
 FROM 
 	employee e
-	LEFT JOIN department_employee de on de.employee_id = e.employee_id
-
+	LEFT JOIN department_employee de on de.employee_id = e.id
 WHERE 
-	de.department_id = NULL /*todo: or is NULL*/ 
+	de.department_id is NULL
 AND 
 	e.salary > (SELECT 
 					e.salary
 				FROM 
 					employee e
-				WHERE e.employee_id = {GIVEN_EMPLOYEE_ID_PARAMETER}
-				) salary 
+				WHERE e.id = {parameter_id}
+				)  
+				
+SELECT
+	*
+FROM 
+	Employee e
+	LEFT JOIN e.Department_Employee de
+WHERE 
+	de.department_id is NULL
+AND 
+	e.salary > (SELECT 
+					e.salary
+				FROM 
+					employee e
+				WHERE e.id = {parameter_id}
+				)  
 
 
 			
 Доп. баллы:
 1. Индекс для запроса
 CREATE INDEX gender_index ON gender;
+// насчет индексов в grails 
+// https://stackoverflow.com/questions/17478879/when-and-how-do-i-have-to-create-an-index-in-grails
 
 2. Триггер (допилить)
 Пример создания таблицы со свойством autoIncrement у столбца ID:
