@@ -7,6 +7,7 @@ import javax.sql.DataSource
 
 class QueriesController {
 
+    def dataSource
 
     def index() {
     }
@@ -48,7 +49,7 @@ class QueriesController {
                 "JOIN department d on d.id = de.department_id GROUP BY de.department_id HAVING e.salary >= AVG(e.salary)"
         def sql = new Sql(dataSource as DataSource)
         Map<Department, List<Employee>> results = new HashMap<Department, List<Employee>>()
-        def rows = sql.rows(queryString).each {
+        sql.rows(queryString).each {
             results.put(Department.findById(it.department_id), Employee.findAllByIdInList(it.employees as List<Long>))
             println(it)
         }
@@ -95,8 +96,6 @@ class QueriesController {
         Вывести их фамилии (given_employee_id)
     */
 
-    def dataSource
-
     def subQuery = {
         def employees = Employee.listOrderById(order: 'asc')
         def employeeId = params.employee
@@ -122,6 +121,5 @@ class QueriesController {
                         resultCount: results.size(),
                         employees  : employees
                 ])
-
     }
 }

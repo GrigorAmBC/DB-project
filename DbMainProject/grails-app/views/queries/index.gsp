@@ -21,7 +21,7 @@
         <a href="filteringAndSorting">Фильтры и сортировка</a>
     </div>
     <div>
-        <a class="fieldcontain required" href="groupBy">Группировка</a>
+        <a class="fieldcontain required" href="groupBy">Group by</a>
     </div>
     <div>
         <a class="fieldcontain required" href="having">Having</a>

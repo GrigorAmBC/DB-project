@@ -63,23 +63,6 @@ AND
 					employee e
 				WHERE e.id = {parameter_id}
 				)  
-				
-SELECT
-	*
-FROM 
-	Employee e
-	LEFT JOIN e.Department_Employee de
-WHERE 
-	de.department_id is NULL
-AND 
-	e.salary > (SELECT 
-					e.salary
-				FROM 
-					employee e
-				WHERE e.id = {parameter_id}
-				)  
-
-
 			
 Доп. баллы:
 1. Индекс для запроса

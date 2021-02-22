@@ -4,6 +4,7 @@ import ru.nsu.fit.grigor.dbproject.domain.Department
 import ru.nsu.fit.grigor.dbproject.domain.DepartmentEmployee
 import ru.nsu.fit.grigor.dbproject.domain.Employee
 import ru.nsu.fit.grigor.dbproject.domain.Gender
+import ru.nsu.fit.grigor.dbproject.domain.HealthCheck
 import ru.nsu.fit.grigor.dbproject.domain.Locomotive
 import ru.nsu.fit.grigor.dbproject.domain.Path
 import ru.nsu.fit.grigor.dbproject.domain.Station
@@ -50,9 +51,11 @@ class BootStrap {
                 employmentDate: getDate(2013, 9, 21), salary: 115000
         ).save()
 
+        new HealthCheck(employee: employee2, checkDate: getDate(2020, 9, 1), result: "poisoned").save()
+
         DepartmentEmployee departmentEmployee1 = new DepartmentEmployee(employee: employee3, department: d1).save()
         DepartmentEmployee departmentEmployee2 = new DepartmentEmployee(employee: employee2, department: d3).save()
-
+        DepartmentEmployee departmentEmployee3 = new DepartmentEmployee(employee: employee4, department: d1).save()
 
         Station station1 = new Station(name: "Novosibirsk main").save()
         Station station2 = new Station(name: "Novosibirsk south").save()

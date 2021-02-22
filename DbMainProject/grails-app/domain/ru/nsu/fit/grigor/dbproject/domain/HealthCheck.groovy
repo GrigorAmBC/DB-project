@@ -8,6 +8,7 @@ class HealthCheck {
 
     static constraints = {
         result blank: false, size: 0..10
+        employee unique: true
         checkDate validator: { if (it.after(new Date())) return ["invalid date"] }
     }
 

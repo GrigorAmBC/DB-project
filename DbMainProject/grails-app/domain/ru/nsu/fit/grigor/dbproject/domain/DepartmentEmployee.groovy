@@ -8,5 +8,4 @@ class DepartmentEmployee {
     static constraints = {
         department(unique: 'employee')
     }
-
 }

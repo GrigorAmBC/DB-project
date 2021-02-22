@@ -30,12 +30,13 @@
     </div>
 </div>
 
-<div class="fieldcontain required">
-    <h4 class="fieldcontain required">Фильтры</h4>
-</div>
+
 
 <form action="index" method="get" name="filters" id="filters">
     <fieldset class="form">
+        <div class="fieldcontain required">
+            <h4 class="fieldcontain required">Фильтры</h4>
+        </div>
         <div class="fieldcontain required">
             <label for="fromDate">Created from</label>
             <input type="date" id="fromDate" name="fromDate" placeholder="from" value="${params.fromDate}"/>
@@ -80,7 +81,7 @@
         </div>
 
         <div class="fieldcontain">
-            <input type="button" name="create" class="save" value="Отправить" id="create" onclick="validateAndSend()">
+            <input type="button" name="create" class="save" value="Применить" id="create" onclick="validateAndSend()">
             <input type="button" name="reset" value="Сбросить" onclick="resetFilterForm()">
         </div>
     </fieldset>
